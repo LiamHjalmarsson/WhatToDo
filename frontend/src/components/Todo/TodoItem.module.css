@@ -1,0 +1,30 @@
+.ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+}
+
+.li {
+    width: 60%;
+    border: 1px solid #b1b1b1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.title {
+    text-align: center;
+}   
+
+.btnContainer { 
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    width: 30%;
+    padding: 0.5rem;
+}

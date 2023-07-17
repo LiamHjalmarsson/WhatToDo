@@ -1,0 +1,25 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form {
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btnContainer {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.error {
+}
