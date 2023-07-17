@@ -6,7 +6,7 @@ import styles from "./Form.module.css";
 import useHttp from "../../hooks/use-http";
 import Error from "../UI/Error/Error";
 
-const TodoForm = ({ onAddTodo, errorMsg }) => {  
+const TodoForm = ({ onAddTodo }) => {  
     let { isLoading, error, sendRequest } = useHttp();  
 
     let [title, setTitle] = useState("");  
@@ -30,7 +30,7 @@ const TodoForm = ({ onAddTodo, errorMsg }) => {
             );
 
         } catch (err) {
-            console.log(err);  // Logging any errors that occur during the HTTP request
+            console.log(err);  
         }
 
         setTitle("");  
@@ -38,11 +38,11 @@ const TodoForm = ({ onAddTodo, errorMsg }) => {
     }
 
     let titleChangeHandler = (e) => {  
-        setTitle(e.target.value);  // Updating the 'title' state variable with the new input value
+        setTitle(e.target.value);  
     }
 
     let descriptionChangeHandler = (e) => { 
-        setDescription(e.target.value);  // Updating the 'description' state variable with the new input value
+        setDescription(e.target.value);  
     }
 
     return (

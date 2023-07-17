@@ -28,7 +28,7 @@ const Todos = () => {
 
     }, [sendRequest]);  // The effect will run when the component mounts and whenever 'sendRequest' changes
 
-    let addTodoHandler = (newTodo) => {  // Function to add a new todo item
+    let addTodoHandler = (newTodo) => { 
         setTodos((prevTodos) => [...prevTodos, newTodo]);  // Adding the new todo item to the 'todos' state
     };
 
@@ -47,7 +47,7 @@ const Todos = () => {
     let removeHandler = (todoId) => {  
         sendRequest(
             {
-                url: `http://127.0.0.1:8000/api/todo-items/${todoId}`,  // Sending a DELETE request to remove the todo item from the server
+                url: `http://127.0.0.1:8000/api/todo-items/${todoId}`, 
                 method: "DELETE"
             },
             () => {
@@ -87,10 +87,10 @@ const Todos = () => {
         <>
             <TodoForm onAddTodo={addTodoHandler} /> 
             {
-                error && <h4> {error} </h4>  // Conditional rendering: Display an error message if 'error' is truthy
+                error && <h4> {error} </h4>  
             }
             {
-                !error && (  // Conditional rendering: If 'error' is falsy, render the todo items
+                !error && ( 
                     <div>
                         <ul className={styles.ul}>  
                             {todos.map((todo) => (
