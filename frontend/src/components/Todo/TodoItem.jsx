@@ -46,13 +46,15 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
             )}
 
             {
-                isLoading && <p> Loading </p>  
+                isLoading && <p className={styles.p}> Loading </p>  
             }
 
             {
-                !isLoading && <p className="">{item.description ? item.description : "No description is available"}</p>  
+                !isEditing && !isLoading && ( 
+                    <p className={styles.p}>{item.description ? item.description : "No description is available"}</p>
+                )
             }
-            
+
             <div className={styles.btnContainer}> 
                 <Button
                     customClass={styles.button}  
