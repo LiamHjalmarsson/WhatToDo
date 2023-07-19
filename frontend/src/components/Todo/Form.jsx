@@ -4,7 +4,6 @@ import Input from "../UI/Input/Input";
 
 import styles from "./Form.module.css";
 import useHttp from "../../hooks/use-http";
-import Error from "../UI/Error/Error";
 
 const TodoForm = ({ onAddTodo }) => {  
     let { isLoading, error, sendRequest } = useHttp();  
@@ -94,6 +93,7 @@ const TodoForm = ({ onAddTodo }) => {
                 </Button>
             </form>
             {error && <p> {error} </p>} 
+            {isLoading && <p> loadig.... </p>}
         </div>
     );
 }

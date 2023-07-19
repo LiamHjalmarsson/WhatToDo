@@ -3,6 +3,7 @@ import styles from "./TodoItem.module.css";
 import useHttp from "../../hooks/use-http";
 import TodoItem from "./TodoItem";
 import TodoForm from "./Form";
+import Loading from "../UI/Loading/Loading";
 
 const Todos = () => {  
     let [todos, setTodos] = useState([]);  
@@ -89,9 +90,11 @@ const Todos = () => {
             {
                 error && <h4> {error} </h4>  
             }
-            {
-                !error && ( 
-                    <div>
+            { 
+                isLoading ? (
+                    <Loading title="Loading todos from DB"/>
+                ) : ( 
+                    <div className={styles.container}>
                         <ul className={styles.ul}>  
                             {todos.map((todo) => (
                                 <TodoItem

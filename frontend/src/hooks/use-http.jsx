@@ -22,6 +22,7 @@ const useHttp = () => {
 
             if (data["error"]) {
                 setError(data["error"]);
+                setIsLoading(false);
                 return;
             }
             

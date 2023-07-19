@@ -7,6 +7,7 @@ import ItemDescription from "./ItemDecription";
 const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => { 
     let [isEditing, setIsEditing] = useState(false);  // Initializing state variable 'isEditing' and its setter function using the 'useState' hook
     let [editDescription, setEditDescription] = useState(item.description ? item.description : "");  // Initializing state variable 'editDescription' and its setter function with the description of the item or an empty string if there's no description
+    let [title, setTitle] = useState("");  
 
     let { isLoading, sendRequest } = useHttp(); 
 
@@ -20,7 +21,10 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                 url: `http://127.0.0.1:8000/api/todo-items/${item.id}`, 
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },  
-                body: { description: editDescription }  // The new description value to be updated
+                body: {
+                        title,
+                        description: editDescription 
+                    }  // The new description value to be updated
             },
             (recourse) => {
                 updateTodoHandler(recourse);  // Callback function to handle the response data from the HTTP request
@@ -33,15 +37,24 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
         setEditDescription(e.target.value);
     }
 
+    let changeTitleHandler = (e) => {  
+        setTitle(e.target.value);
+    }
+
     return (
-        <li key={item.id} className={styles.li}> 
-            <h4 className={styles.title}>{item.title}</h4>  
+        <li key={item.id} className={styles.li} onClick={(e) => console.log(e)}> 
+            {
+                !isEditing && <h4 className={styles.title}>{item.title}</h4>  
+            }
+
             {isEditing && (  
                 <ItemDescription
                     value={editDescription}  // Passing the current edited description as a value to 'ItemDescription'
                     onChange={changeEditHandler}  // Passing the 'changeEditHandler' function to handle changes in the edited description
                     onSubmit={submitHandler}  // Passing the 'submitHandler' function to handle the submission of the edited description
                     onCancel={toggleEditHandler}  // Passing the 'toggleEditHandler' function to cancel the edit mode
+                    changeTitleHandler={changeTitleHandler}
+                    title={title}
                 />
             )}
 
