@@ -8,6 +8,8 @@ import useHttp from "../../hooks/use-http";
 const TodoForm = ({ onAddTodo }) => {  
     let { isLoading, error, sendRequest } = useHttp();  
 
+    let [toggleForm, setToggleForm] = useState(false);
+
     let [title, setTitle] = useState("");  
     let [description, setDescription] = useState("");  
 
@@ -46,52 +48,74 @@ const TodoForm = ({ onAddTodo }) => {
 
     return (
         <div className={styles.container}> 
-            <form action="POST" className={styles.form} onSubmit={submitHandler}>  
-                <Input
-                    label="Title" 
-                    input={
-                        {
-                            id: "title",
-                            type: "text",
-                            placeholder: "Add title of task",
-                            value: title,
-                            onChange: titleChangeHandler  
-                        }
-                    }
-                />
-                <Input
-                    label="Description"  
-                    input={
-                        {
-                            id: "description",
-                            type: "text",
-                            placeholder: "Add description",
-                            value: description,
-                            onChange: descriptionChangeHandler 
-                        }
-                    }
-                />
-                <Button
-                    button={{
-                        onClick: (e) => {
-                            e.preventDefault(); 
-                            setTitle(""); 
-                            setDescription(""); 
+            <div className={styles.formHandler}>
+                <Button 
+                    button={{ 
+                        onClick: () => {
+                            setToggleForm(prev => !prev)
                         }
                     }}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    button={
-                        {
-                            type: "submit", 
-                        }
+                > 
+                    {
+                        !toggleForm ? (
+                            <p> Open form </p>
+                        ) : (
+                            <p> Close form </p>
+                        )
                     }
-                >
-                    Add new Task
                 </Button>
-            </form>
+            </div>
+            
+            {
+                toggleForm && ( 
+                    <form action="POST" className={styles.form} onSubmit={submitHandler}>  
+                        <Input
+                            label="Title" 
+                            input={
+                                {
+                                    id: "title",
+                                    type: "text",
+                                    placeholder: "Add title of task",
+                                    value: title,
+                                    onChange: titleChangeHandler  
+                                }
+                            }
+                        />
+                        <Input
+                            label="Description"  
+                            input={
+                                {
+                                    id: "description",
+                                    type: "text",
+                                    placeholder: "Add description",
+                                    value: description,
+                                    onChange: descriptionChangeHandler 
+                                }
+                            }
+                        />
+                        <Button
+                            button={{
+                                onClick: (e) => {
+                                    e.preventDefault(); 
+                                    setTitle(""); 
+                                    setDescription(""); 
+                                }
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            button={
+                                {
+                                    type: "submit", 
+                                }
+                            }
+                        >
+                            Add new Task
+                        </Button>
+                    </form>
+                )
+            }
             {error && <p> {error} </p>} 
             {isLoading && <p> loadig.... </p>}
         </div>

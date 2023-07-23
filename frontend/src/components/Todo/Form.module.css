@@ -21,5 +21,9 @@
     justify-content: space-around;
 }
 
-.error {
+.formHandler {
+    display: flex;
+    justify-content: flex-start;
+    width: 50%;
+
 }

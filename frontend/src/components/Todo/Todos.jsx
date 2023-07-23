@@ -4,9 +4,11 @@ import useHttp from "../../hooks/use-http";
 import TodoItem from "./TodoItem";
 import TodoForm from "./Form";
 import Loading from "../UI/Loading/Loading";
+import Button from "../UI/Button/Button";
 
 const Todos = () => {  
     let [todos, setTodos] = useState([]);  
+
     let { isLoading, error, sendRequest } = useHttp(); 
 
     useEffect(() => {  // Using the 'useEffect' hook to fetch data when the component mounts
@@ -86,7 +88,8 @@ const Todos = () => {
 
     return (
         <>
-            <TodoForm onAddTodo={addTodoHandler} /> 
+            <TodoForm onAddTodo={addTodoHandler} />
+            
             {
                 error && <h4> {error} </h4>  
             }
