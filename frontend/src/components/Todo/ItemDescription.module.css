@@ -21,7 +21,7 @@
     resize: none;
     padding: 8px; 
     font-size: 16px; 
-    border: 1px solid #ccc;
+    border: 1px solid var(--fontColor);
     border-radius: 4px; 
     outline: none; 
 }

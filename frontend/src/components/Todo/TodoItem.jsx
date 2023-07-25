@@ -7,7 +7,7 @@ import ItemDescription from "./ItemDecription";
 const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => { 
     let [isEditing, setIsEditing] = useState(false);  // Initializing state variable 'isEditing' and its setter function using the 'useState' hook
     let [editDescription, setEditDescription] = useState(item.description ? item.description : "");  // Initializing state variable 'editDescription' and its setter function with the description of the item or an empty string if there's no description
-    let [title, setTitle] = useState("");  
+    let [title, setTitle] = useState(item.title);  
 
     let { isLoading, sendRequest } = useHttp(); 
 
@@ -16,6 +16,7 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
     }
 
     let submitHandler = async () => {  
+
         sendRequest(
             {
                 url: `http://127.0.0.1:8000/api/todo-items/${item.id}`, 
@@ -41,8 +42,16 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
         setTitle(e.target.value);
     }
 
+    let message;
+    if (isLoading) {
+        message = "Loading...";
+    } 
+    else {
+        message = item.description ? item.description : "No description is available";
+    }
+
     return (
-        <li key={item.id} className={styles.li} onClick={(e) => console.log(e)}> 
+        <li key={item.id} className={`${styles.li} ${styles.li} ${item.completed ? styles.done: undefined} `}> 
             {
                 !isEditing && <h4 className={styles.title}>{item.title}</h4>  
             }
@@ -58,40 +67,37 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                 />
             )}
 
-            {
-                isLoading && <p className={styles.p}> Loading </p>  
-            }
+            <p className={styles.p}> {message} </p>
 
-            {
-                !isEditing && !isLoading && ( 
-                    <p className={styles.p}>{item.description ? item.description : "No description is available"}</p>
-                )
-            }
+                    <div className={styles.btnContainer}> 
+                        <Button
+                            customClass={styles.button}  
+                            button={{
+                                onClick: () => {
+                                    removeHandler(item.id);
+                                }
+                            }}
+                        >
+                            Remove
+                        </Button>
+                        <Button 
+                            customClass={styles.button}  
+                            button={{ onClick: toggleEditHandler }} 
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            customClass={styles.button} 
+                            button={{
+                                onClick: () => doneHandler(item)
+                            }}
+                        >
+                            {
+                                !item.completed ? "Done" : "Not Completed"
+                            }
+                        </Button>
+                    </div>
 
-            <div className={styles.btnContainer}> 
-                <Button
-                    customClass={styles.button}  
-                    button={{
-                        onClick: () => removeHandler(item.id)
-                    }}
-                >
-                    Remove
-                </Button>
-                <Button 
-                    customClass={styles.button}  
-                    button={{ onClick: toggleEditHandler }} 
-                >
-                    Edit
-                </Button>
-                <Button
-                    customClass={styles.button} 
-                    button={{
-                        onClick: () => doneHandler(item.id)
-                    }}
-                >
-                    Done
-                </Button>
-            </div>
         </li>
     );
 };

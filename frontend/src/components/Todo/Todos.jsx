@@ -4,7 +4,6 @@ import useHttp from "../../hooks/use-http";
 import TodoItem from "./TodoItem";
 import TodoForm from "./Form";
 import Loading from "../UI/Loading/Loading";
-import Button from "../UI/Button/Button";
 
 const Todos = () => {  
     let [todos, setTodos] = useState([]);  
@@ -47,49 +46,40 @@ const Todos = () => {
         });
     };
 
-    let removeHandler = (todoId) => {  
-        sendRequest(
-            {
-                url: `http://127.0.0.1:8000/api/todo-items/${todoId}`, 
-                method: "DELETE"
-            },
-            () => {
-                setTodos((prevTodos) => {
-                    const updatedTodos = prevTodos.filter((todo) => todo.id !== todoId);  // Filtering out the removed todo item
-                    return updatedTodos;  // Updating the 'todos' state with the remaining todo items
-                });
-            }
-        );
+    let removeHandler = async (todoId) => {  
+        await fetch(`http://127.0.0.1:8000/api/todo-items/${todoId}`, {
+            method: "DELETE",
+        });
+
+        setTodos((prevTodos) => {
+            const updatedTodos = prevTodos.filter((todo) => todo.id !== todoId);  // Filtering out the removed todo item
+            return updatedTodos;  // Updating the 'todos' state with the remaining todo items
+        });
     };
 
-    let doneHandler = async (id) => {  
-        await sendRequest(
-            {
-                url: `http://127.0.0.1:8000/api/todo-items/${id}`,  
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: { completed: true },  
-            },
-            () => {
-                let updatedTodo = todos.map((todo) => {
-                    if (todo.id === id) {
-                        return {
-                            ...todo,
-                            completed: true, 
-                        };
-                    }
-                    return todo;
-                });
+    let doneHandler = async (item) => {  
+        await fetch(`http://127.0.0.1:8000/api/todo-items/${item.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ completed: !item.completed }),  
+        });
 
-                setTodos(updatedTodo);  // Updating the 'todos' state with the updated todo item
+        let updatedTodo = todos.map((todo) => {
+            if (todo.id === item.id) {
+                return {
+                    ...todo,
+                    completed: !item.completed, 
+                };
             }
-        );
+            return todo;
+        });
+
+        setTodos(updatedTodo);  // Updating the 'todos' state with the updated todo item
     };
 
     return (
         <>
             <TodoForm onAddTodo={addTodoHandler} />
-            
             {
                 error && <h4> {error} </h4>  
             }

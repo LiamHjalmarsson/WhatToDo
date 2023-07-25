@@ -6,5 +6,5 @@
 
 .link {
     text-decoration: none;
-    color: antiquewhite;
+    color: var(--fontColor);
 }

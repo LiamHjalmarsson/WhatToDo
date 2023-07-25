@@ -3,8 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: rgba(228, 227, 227, 0.87);
-  background-color: #313131;
+  --fontColor: rgba(209, 196, 196, 0.87);
+  --bgDark: #313131;
+  --btnColor: rgb(60, 167, 216);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,6 +17,8 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--bgDark);
+  color: var(--fontColor);
 }
 
 .btnContainer {

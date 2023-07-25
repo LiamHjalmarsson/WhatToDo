@@ -19,7 +19,6 @@ const useHttp = () => {
             );
 
             const data = await response.json();
-
             if (data["error"]) {
                 setError(data["error"]);
                 setIsLoading(false);

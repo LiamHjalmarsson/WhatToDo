@@ -2,7 +2,7 @@
     border: none;
     outline: none;
     padding: 0.5rem;
-    background: rgb(60, 167, 216);
+    background: var(--btnColor);
     border-radius: 3px;
 
     transition: background 500ms ease-in-out;
