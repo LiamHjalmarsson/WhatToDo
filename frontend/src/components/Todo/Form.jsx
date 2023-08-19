@@ -5,16 +5,14 @@ import Input from "../UI/Input/Input";
 import styles from "./Form.module.css";
 import useHttp from "../../hooks/use-http";
 
-const TodoForm = ({ onAddTodo }) => {  
-    let { isLoading, error, sendRequest } = useHttp();  
+const TodoForm = ({ onAddTodo }) => {
+    let [title, setTitle] = useState("");
+    let [description, setDescription] = useState("");
 
-    let [toggleForm, setToggleForm] = useState(false);
+    let { isLoading, error, sendRequest } = useHttp();
 
-    let [title, setTitle] = useState("");  
-    let [description, setDescription] = useState("");  
-
-    let submitHandler = async (e) => {  
-        e.preventDefault();  
+    let submitHandler = async (e) => {
+        e.preventDefault();
 
         try {
             sendRequest(
@@ -31,93 +29,61 @@ const TodoForm = ({ onAddTodo }) => {
             );
 
         } catch (err) {
-            console.log(err);  
+            console.log(err);
         }
 
-        setTitle("");  
-        setDescription("");  
+        setTitle("");
+        setDescription("");
     }
 
-    let titleChangeHandler = (e) => {  
-        setTitle(e.target.value);  
-    }
-
-    let descriptionChangeHandler = (e) => { 
-        setDescription(e.target.value);  
+    let titleChangeHandler = (e) => {
+        setTitle(e.target.value);
     }
 
     return (
-        <div className={styles.container}> 
-            <div className={styles.formHandler}>
-                <Button 
-                    button={{ 
-                        onClick: () => {
-                            setToggleForm(prev => !prev)
+        <div className={styles.container}>
+            <form action="POST" className={styles.form} onSubmit={submitHandler}>
+                <Input
+                    label="Title"
+                    input={
+                        {
+                            id: "title",
+                            type: "text",
+                            placeholder: "Add title of task",
+                            value: title,
+                            onChange: titleChangeHandler
                         }
-                    }}
-                > 
-                    {
-                        !toggleForm ? (
-                            <p> Open form </p>
-                        ) : (
-                            <p> Close form </p>
-                        )
                     }
-                </Button>
-            </div>
-            
+                />
+                <div className={styles.btnContainer}>
+                    <Button
+                        button={{
+                            onClick: (e) => {
+                                e.preventDefault();
+                                setTitle("");
+                                setDescription("");
+                            }
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        button={
+                            {
+                                type: "submit",
+                            }
+                        }
+                    >
+                        Add new Task
+                    </Button>
+                </div>
+            </form>
             {
-                toggleForm && ( 
-                    <form action="POST" className={styles.form} onSubmit={submitHandler}>  
-                        <Input
-                            label="Title" 
-                            input={
-                                {
-                                    id: "title",
-                                    type: "text",
-                                    placeholder: "Add title of task",
-                                    value: title,
-                                    onChange: titleChangeHandler  
-                                }
-                            }
-                        />
-                        <Input
-                            label="Description"  
-                            input={
-                                {
-                                    id: "description",
-                                    type: "text",
-                                    placeholder: "Add description",
-                                    value: description,
-                                    onChange: descriptionChangeHandler 
-                                }
-                            }
-                        />
-                        <Button
-                            button={{
-                                onClick: (e) => {
-                                    e.preventDefault(); 
-                                    setTitle(""); 
-                                    setDescription(""); 
-                                }
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            button={
-                                {
-                                    type: "submit", 
-                                }
-                            }
-                        >
-                            Add new Task
-                        </Button>
-                    </form>
-                )
+                error && <p> {error} </p>
             }
-            {error && <p> {error} </p>} 
-            {isLoading && <p> loadig.... </p>}
+            {
+                isLoading && <p> loadig.... </p>
+            }
         </div>
     );
 }

@@ -1,0 +1,15 @@
+.doneIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -5px;
+}
+
+.checkmark {
+    width: 20px;
+    height: 40px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}

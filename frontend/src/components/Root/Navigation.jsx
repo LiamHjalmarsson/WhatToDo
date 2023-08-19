@@ -14,6 +14,11 @@ const MainNavigation = () => {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/projects" className={styles.link}>
+                                Projects
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/todos" className={styles.link}>
                                 Todos
                             </NavLink>

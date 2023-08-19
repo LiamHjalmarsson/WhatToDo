@@ -1,5 +1,6 @@
 .container {
     margin-top: 3rem;
+    transition: display 100ms ease;
 }
 
 .ul {
@@ -10,6 +11,11 @@
     padding: 0;
 }
 
+.loading {
+    display: none;
+    transition: display 100ms ease;
+}
+
 .li {
     width: 60%;
     border: 1px solid var(--btnColor);
@@ -17,6 +23,8 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+
+    transition: border-color ease-in 100ms;
 }
 
 .title {
@@ -39,5 +47,5 @@
 }
 
 .done {
-    border: 2px solid green;
+    border-color: orange;
 }

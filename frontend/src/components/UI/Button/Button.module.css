@@ -4,11 +4,14 @@
     padding: 0.5rem;
     background: var(--btnColor);
     border-radius: 3px;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     transition: background 500ms ease-in-out;
     cursor: pointer;
 }
 
 .button:hover {
-    background: yellow;
 }

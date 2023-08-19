@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Todo;
 use App\Models\TodoItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

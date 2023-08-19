@@ -2,9 +2,12 @@ import { useState } from "react";
 import Button from "../UI/Button/Button";
 import useHttp from "../../hooks/use-http";
 import ItemDescription from "./ItemDecription";
+import Done from "../UI/Icons/Done";
+import Trash from "../UI/Icons/Trash";
+
 import styles from "./TodoItem.module.css";
 
-const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
+const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler, loading }) => {
     let [isEditing, setIsEditing] = useState(false);  // Initializing state variable 'isEditing' and its setter function using the 'useState' hook
     let [editDescription, setEditDescription] = useState(item.description ? item.description : "");  // Initializing state variable 'editDescription' and its setter function with the description of the item or an empty string if there's no description
     let [title, setTitle] = useState(item.title);
@@ -23,7 +26,6 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: {
-                    title,
                     description: editDescription
                 }  // The new description value to be updated
             },
@@ -47,14 +49,20 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
         message = "Loading...";
     } 
     else if (deleteLoad) {
-        message = "Deleting";
+        message = "Removing...";
     }
     else {
-        message = item.description ? item.description : "No description is available";
+        message = item.description ? item.description : "No description added.";
     }
 
     return (
-        <li key={item.id} className={`${styles.li} ${styles.li} ${item.completed ? styles.done : undefined} `}>
+        <li 
+            key={item.id} 
+            className={`
+                ${styles.li} 
+                ${item.completed ? styles.done : undefined}
+            `}
+        >
             {
                 !isEditing && <h4 className={styles.title}>{item.title}</h4>
             }
@@ -70,10 +78,12 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                 />
             )}
 
-            <p className={styles.p}> {message} </p>
+            {
+                !item.completed && !isEditing && <p className={styles.p}> {message} </p>
+            }
 
             {
-                !deleteLoad && (
+                !deleteLoad && !isEditing && (
                         <div className={styles.btnContainer}>
                             <Button
                                 customClass={styles.button}
@@ -84,14 +94,14 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                                     }
                                 }}
                             >
-                                Remove
+                                <Trash />
                             </Button>
-                            <Button
-                                customClass={styles.button}
-                                button={{ onClick: toggleEditHandler }}
-                            >
-                                Edit
-                            </Button>
+                                    <Button
+                                        customClass={`${styles.button} ${styles.unactive}`}
+                                        button={{ onClick: toggleEditHandler }}
+                                    >
+                                        Edit
+                                    </Button>
                             <Button
                                 customClass={styles.button}
                                 button={{
@@ -100,9 +110,7 @@ const TodoItem = ({ item, doneHandler, removeHandler, updateTodoHandler }) => {
                                     }
                                 }}
                             >
-                                {
-                                    !item.completed ? "Done" : "Not Completed"
-                                }
+                                <Done completed={item.completed} />
                             </Button>
                         </div>
                     )

@@ -6,6 +6,7 @@
     flex-direction: column;
 }
 
+
 .btnContainer {
     display: flex;
     justify-content: center;
@@ -17,11 +18,14 @@
 
 .form {
     width: 90%;
-    height: auto;
-    resize: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 8px; 
-    font-size: 16px; 
-    border: 1px solid var(--fontColor);
     border-radius: 4px; 
-    outline: none; 
+}
+
+.textarea {
+    resize: none;
+    max-lines: 1;
 }

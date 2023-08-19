@@ -7,7 +7,7 @@ let ItemDescription = ({title, value, onChange, onSubmit, onCancel, changeTitleH
     return (
         <>
             <div className={styles.container}> 
-                <form action="PUT" onSubmit={onSubmit}>
+                <form action="PUT" onSubmit={onSubmit} className={styles.form}>
                     <Input 
                         label={title} 
                         input={{ 
@@ -19,7 +19,7 @@ let ItemDescription = ({title, value, onChange, onSubmit, onCancel, changeTitleH
                         }}
                     />
                     <textarea 
-                        className={styles.form}
+                        className={styles.textarea}
                         value={value}
                         onChange={onChange}
                     />

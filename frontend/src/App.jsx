@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root/Root";
 import Main from "./components/Main/Main";
 import Todos from "./components/Todo/Todos";
+import Projects from "./components/Projects/Projects";
 
 const router = createBrowserRouter(
   [
@@ -14,6 +15,10 @@ const router = createBrowserRouter(
             {
               index: true, // Configuring this route as the default index route for the root path
               element: <Main />
+            },
+            {
+              path: "/projects",
+              element: <Projects />
             },
             {
               path: "/todos",
